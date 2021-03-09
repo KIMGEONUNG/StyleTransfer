@@ -8,10 +8,9 @@ The image transformation network is shown below. For a given style image, the ne
 <img src="figure/model.png" height="300"/>
 
 ## Prerequisites
-- Python 2.7
-- [PyTorch 0.2.0](http://pytorch.org/)
-- [NumPy](http://www.numpy.org/)
-- [PIL](http://pillow.readthedocs.io/en/3.1.x/installation.html)
+- Python 3.8.5 
+- pytorch 1.7.1 , py3.8_cuda11.0.221_cudnn8.0.5_0
+- torchvision 0.8.2 , py38_cu110    
 
 ## Usage
 ### Train
@@ -37,7 +36,7 @@ $ python style.py train --style-image style_imgs/mosaic.jpg --dataset coco --gpu
 You can stylize an image with a pretraind model with the following command. Pretrained models for mosaic.jpg and udine.jpg are provided.
 
 ```bash
-$ python style.py transfer --model-path "path_to_pretrained_model_image" --source "path_to_source_image" --target "name_of_target_image"
+$ python style.py transfer --model-path "path_to_pretrained_model_image" --source "path_to_source_image" --output "name_of_target_image"
 ```
 
 You can also specify if you would like to run on a GPU:
@@ -46,7 +45,7 @@ You can also specify if you would like to run on a GPU:
 For example, to transfer the style of mosaic.jpg onto maine.jpg on a GPU, I would use:
 
 ```bash
-$ python style.py transfer --model-path model/mosaic.model --source content_imgs/maine.jpg --target maine_mosaic.jpg --gpu 0
+$ python style.py transfer --model-path model/mosaic.model --source content_imgs/maine.jpg --output maine_mosaic.jpg --gpu 0
 ```
 
 ## Results
