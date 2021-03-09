@@ -29,7 +29,7 @@ Here are some options that you can use:
 So to train on a GPU with mosaic.jpg as my style image, MS-COCO downloaded into a folder named coco, and wanting to visualize a sample image throughout training, I would use the following command: 
 
 ```bash
-$ python style.py train --style-image style_imgs/mosaic.jpg --dataset coco --gpu 1 --visualize 1
+$ python style.py train --style-image style_imgs/mosaic.jpg --dataset coco --gpu 0 --visualize 1
 ```
 
 ### Evaluation
@@ -46,7 +46,7 @@ You can also specify if you would like to run on a GPU:
 For example, to transfer the style of mosaic.jpg onto maine.jpg on a GPU, I would use:
 
 ```bash
-$ python style.py transfer --model-path model/mosaic.model --source content_imgs/maine.jpg --target maine_mosaic.jpg --gpu 1
+$ python style.py transfer --model-path model/mosaic.model --source content_imgs/maine.jpg --target maine_mosaic.jpg --gpu 0
 ```
 
 ## Results

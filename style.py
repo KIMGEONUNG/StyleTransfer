@@ -29,7 +29,7 @@ def train(args):
         use_cuda = True
         dtype = torch.cuda.FloatTensor
         torch.cuda.set_device(args.gpu)
-        print "Current device: %d" %torch.cuda.current_device()
+        print("Current device: %d" %torch.cuda.current_device())
 
     # visualization of training controlled by flag
     visualize = (args.visualize != None)
@@ -117,20 +117,20 @@ def train(args):
             for j in range(4):
                 style_loss += loss_mse(y_hat_gram[j], style_gram[j][:img_batch_read])
             style_loss = STYLE_WEIGHT*style_loss
-            aggregate_style_loss += style_loss.data[0]
+            aggregate_style_loss += style_loss.data.item()
 
             # calculate content loss (h_relu_2_2)
             recon = y_c_features[1]      
             recon_hat = y_hat_features[1]
             content_loss = CONTENT_WEIGHT*loss_mse(recon_hat, recon)
-            aggregate_content_loss += content_loss.data[0]
+            aggregate_content_loss += content_loss.data.item()
 
             # calculate total variation regularization (anisotropic version)
             # https://www.wikiwand.com/en/Total_variation_denoising
             diff_i = torch.sum(torch.abs(y_hat[:, :, :, 1:] - y_hat[:, :, :, :-1]))
             diff_j = torch.sum(torch.abs(y_hat[:, :, 1:, :] - y_hat[:, :, :-1, :]))
             tv_loss = TV_WEIGHT*(diff_i + diff_j)
-            aggregate_tv_loss += tv_loss.data[0]
+            aggregate_tv_loss += tv_loss.data.item()
 
             # total loss
             total_loss = style_loss + content_loss + tv_loss
@@ -144,7 +144,7 @@ def train(args):
                 status = "{}  Epoch {}:  [{}/{}]  Batch:[{}]  agg_style: {:.6f}  agg_content: {:.6f}  agg_tv: {:.6f}  style: {:.6f}  content: {:.6f}  tv: {:.6f} ".format(
                                 time.ctime(), e + 1, img_count, len(train_dataset), batch_num+1,
                                 aggregate_style_loss/(batch_num+1.0), aggregate_content_loss/(batch_num+1.0), aggregate_tv_loss/(batch_num+1.0),
-                                style_loss.data[0], content_loss.data[0], tv_loss.data[0]
+                                style_loss.item(), content_loss.item(), tv_loss.item()
                             )
                 print(status)
 
@@ -191,7 +191,7 @@ def style_transfer(args):
         use_cuda = True
         dtype = torch.cuda.FloatTensor
         torch.cuda.set_device(args.gpu)
-        print "Current device: %d" %torch.cuda.current_device()
+        print("Current device: %d" %torch.cuda.current_device())
 
     # content image
     img_transform_512 = transforms.Compose([
@@ -235,10 +235,10 @@ def main():
 
     # command
     if (args.subcommand == "train"):
-        print "Training!"
+        print("Training!")
         train(args)
     elif (args.subcommand == "transfer"):
-        print "Style transfering!"
+        print("Style transfering!")
         style_transfer(args)
     else:
         print("invalid command")
